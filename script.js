@@ -1,7 +1,8 @@
 const wrapper = document.getElementById('wrapper');
 const queriesWrapper = document.getElementById('queries-wrapper');
 const clearQueriesBtn = document.getElementById('clear-queries-button');
-
+ 
+ 
 let jobListings = [];  
 fetch("data.json") 
 .then(resp => {
@@ -9,9 +10,9 @@ fetch("data.json")
 }).then(data => {
     jobListings = data.map(listing => {
        const job = document.createElement('div');
-       job.classList.add('job-listing');
+       job.classList.add('job-listing'); 
        job.innerHTML = `<div class="main-info">
-                            <img src="${listing.logo}" alt="">
+                            <img class="company-logo" src="${listing.logo}" alt="${listing.company} logo">
                             <div class="company-and-job-status">
                               <p class="company">${listing.company}</p>
                             </div>
@@ -66,36 +67,48 @@ fetch("data.json")
     });    
 }); 
 
-let value = [];  
-function filter(e) {   
-    value.push(e.target.innerText);        
-    console.log(value)
+function hideListings() { 
     jobListings.forEach(jobListing => {  
         let isVisible = value.every(query => {
             return jobListing.keywords.includes(query);
         })  
         jobListing.element.classList.toggle('hidden-listing', !isVisible);   
     }) 
+}
+let value = [];  
+function filter(e) {   
+    if(value.includes(e.target.innerText)) { 
+        return;  
+    }
+    value.push(e.target.innerText);   
+    console.log(value) 
+    hideListings();     
     const query = document.createElement('p');
-    const removeQueryButton = document.createElement('button');
-    removeQueryButton.innerHTML = `<img src="images/icon-remove.svg" alt=""></img>`;
-    removeQueryButton.classList.add('remove-query-button');
+    const removeQueryBtn = document.createElement('button');
+    removeQueryBtn.innerHTML = `<img src="images/icon-remove.svg" alt=""></img>`;
+    removeQueryBtn.classList.add('remove-query-button');
     query.classList.add('query');
     query.innerText = e.target.innerText; 
-    query.appendChild(removeQueryButton)
+    query.appendChild(removeQueryBtn) 
     queriesWrapper.appendChild(query);   
+    removeQueryBtn.addEventListener('click', () => {
+           removeQueryBtn.parentElement.remove(); 
+           value.splice(value.indexOf(removeQueryBtn.previousSibling.textContent),1);
+           hideListings(); 
+    })   
 } 
 setTimeout(() => { 
-    tags = document.querySelectorAll('.tag');
+    tags = document.querySelectorAll('.tag'); 
     tags.forEach(tag => {
         tag.addEventListener('click', filter);
     }) 
 },300)        
 
+
 clearQueriesBtn.addEventListener('click', () => {
     jobListings.forEach(jobListing => {
         jobListing.element.classList.remove('hidden-listing'); 
     }) 
-    queriesWrapper.innerHTML = ''; 
+    queriesWrapper.innerHTML = '';  
     value = []; 
 }) 

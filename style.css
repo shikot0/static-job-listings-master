@@ -17,31 +17,42 @@ main {
     flex-direction: column;
     gap: 20px; 
     min-height: 100%;        
-    padding: 5% 6% 3%;  
+    padding: 5% 6% 3%;   
     width: 100%; 
     position: relative;
+    overflow-x: clip; 
 }
 #search-query {
     position: absolute; 
     width: 88%; 
     background: white;   
-    display: flex;
+    display: flex; 
     justify-content: space-between;
-    padding: 2%;
+    padding: 1% 2%; 
+    min-height: 60px;
     border-radius: 5px; 
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); 
-    transform: translateY(-145%);  
+    transform: translateY(-165%);    
+    animation: slide-in .6s cubic-bezier(.18,.89,.32,1.28) 1 backwards;
+}
+@keyframes slide-in {  
+    from {
+        opacity: 0;
+        transform: translate(-100%,-165%); 
+    }
 }
 #queries-wrapper {
     display: flex;
-    align-items: center;
-    gap: 50px;  
-}
+    align-items: center; 
+    width: 100%;
+    min-height: 100%; 
+    gap: 40px;    
+} 
 .query {
     background: hsl(180, 31%, 95%);
     color:  hsl(180, 29%, 50%);
-    padding: 6px 10px 3px;  
-    border-radius: 4px 0 0 4px;  
+    padding: 6px 32px 3px 5px;   
+    border-radius: 4px 0px 0px 4px;  
     font-weight: 700;
     cursor: pointer; 
     transition: .2s; 
@@ -53,7 +64,7 @@ main {
 }
 .remove-query-button {
     position: absolute;
-    right: -25px;  
+    right: 0;  
     top: 0;
     height: 100%;
     width: 25px; 
@@ -69,13 +80,16 @@ main {
 .remove-query-button:hover {
     background: hsl(180, 14%, 20%);
 }
+.remove-query-button img{
+    width: 90%;  
+}
 #clear-queries-button {
     background: transparent;
-    border: none;
+    border: none; 
     text-decoration: underline; 
     font-weight: 500;
     color: hsl(180, 8%, 52%); 
-    cursor: pointer;
+    cursor: pointer; 
     transition: .2s; 
 }
 #clear-queries-button:hover { 
@@ -89,13 +103,13 @@ main {
     justify-content: space-between;
     align-items: center;
     border-radius: 6px;   
-    padding: 1.3rem;    
+    padding: 1.3rem 2rem;       
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); 
     animation: fade-in .3s linear 1 backwards; 
     transition: .3s; 
 } 
-.job-listing:hover {  
-    transform: scale(1.03) translateX(16px);     
+.job-listing:hover {   
+    transform: scale(1.02) translateX(10px);      
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); 
 }
 @keyframes fade-in {
@@ -105,7 +119,7 @@ main {
     }
 }
 .featured {
-    border-left: 5px solid hsl(180, 29%, 50%); 
+    border-left: 5px solid hsl(180, 29%, 50%);  
 }
 .main-info { 
     display: grid;
@@ -114,11 +128,14 @@ main {
     gap: 0 10px;
     align-items: center; 
 }
-.main-info img {
+.company-logo {
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 4; 
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
 }
 .company-and-job-status {
     display: flex;
@@ -146,11 +163,12 @@ main {
 }
 .job-details {
     display: flex; 
-    gap: 10px;
+    gap: 1.5rem;    
 }
 .position {
     font-weight: 700;  
     color: hsl(180, 14%, 20%);
+    font-size: 1.1rem; 
 }
 .time-posted, .contract, .location {
     font-weight: 500;
@@ -158,9 +176,25 @@ main {
     font-size: .95rem; 
     cursor: pointer;
 } 
+.contract {
+    position: relative;
+}
+.contract::before {
+    content: '.'; 
+    position: absolute;
+    left: -25%;
+    top: -28%; 
+}
+.contract::after {
+    content: '.'; 
+    position: absolute;
+    right: -25%;   
+    top: -28%; 
+ }
 .tags {
     display: flex;
-    align-items: center;
+    align-items: center; 
+    justify-content: end;
     gap: 15px;
 } 
 .tag {
@@ -179,3 +213,118 @@ main {
 .hidden-listing {
     display: none;
 }
+
+@media screen and (max-width: 965px) {
+    #wrapper {
+        padding: 6% 3% 2%; 
+    }
+    #search-query {
+        width: 94%;  
+        transform: translateY(-140%)
+    }
+    .job-listing {
+        padding: 2%;
+    }
+    .new-tag, .featured-tag {
+        font-size: .7rem; 
+    }
+    .position {
+        font-size: 1rem; 
+    }
+    .job-details {
+        gap: 10px;
+    }
+    .time-posted, .contract, .location {
+        font-size: .8rem; 
+    }
+    .contract::before {
+        content: '.'; 
+        position: absolute;
+        left: -13.5%; 
+        top: -25%; 
+    }
+    .contract::after {
+        content: '.'; 
+        position: absolute;
+        right: -13.5%;   
+        top: -25%; 
+     } 
+    .tags {
+        gap: 10px; 
+    }
+    .tag {
+        font-size: .7rem; 
+    } 
+}
+
+@media screen and (max-width: 680px) {
+    main {
+        padding: 25% 0 0 0; 
+        background: url(images/bg-header-mobile.svg), hsl(180, 29%, 50%);
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    #wrapper {
+        gap: 55px; 
+        padding: 15% 2% 2%;
+    }
+    #search-query {
+        transform: translateY(-160%);  
+        width: 96%;  
+    }
+    #queries-wrapper {
+        flex-wrap: wrap;   
+        gap: 10px 30px;    
+    }
+    .query {
+        font-size: .8rem;  
+        padding: 4px 5px 2px;  
+    } 
+    .remove-query-button {
+        right: -20px;  
+        width: 20px; 
+    }
+    .job-listing {
+        flex-direction: column; 
+        align-items: flex-start; 
+        padding: 0 5%;  
+    }
+    .main-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; 
+        gap: 0;
+        padding: 0 0 5% 0; 
+        border-bottom: 1px solid hsl(180, 8%, 52%);  
+        width: 100%;
+    }
+    .company-logo {
+        width: 13%;  
+        transform: translateY(-50%);  
+    }
+    .company {
+        font-size: 1.2rem; 
+    }
+    .new-tag, .featured-tag {
+        font-size: .9rem;  
+    }
+    .position {
+        font-size: 1.3rem;
+        margin: 3% 0;  
+    }
+    .job-details {
+        gap: 10px;
+    }
+    .time-posted, .contract, .location {
+        font-size: 1rem;  
+    }
+    .tags {
+        padding: 5% 0;  
+        width: 100%; 
+        justify-content: flex-start; 
+        flex-wrap: wrap;  
+    }
+    .tag {
+        font-size: 1rem; 
+    } 
+} 
