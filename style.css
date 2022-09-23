@@ -6,7 +6,6 @@
 main {
     min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     background: url(images/bg-header-desktop.svg), hsl(180, 29%, 50%);
     background-repeat: no-repeat;
@@ -17,9 +16,71 @@ main {
     display: flex;
     flex-direction: column;
     gap: 20px; 
-    height: 100%;       
-    padding: 3% 6%;  
+    min-height: 100%;        
+    padding: 5% 6% 3%;  
     width: 100%; 
+    position: relative;
+}
+#search-query {
+    position: absolute; 
+    width: 88%; 
+    background: white;   
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+    border-radius: 5px; 
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); 
+    transform: translateY(-145%);  
+}
+#queries-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 50px;  
+}
+.query {
+    background: hsl(180, 31%, 95%);
+    color:  hsl(180, 29%, 50%);
+    padding: 6px 10px 3px;  
+    border-radius: 4px 0 0 4px;  
+    font-weight: 700;
+    cursor: pointer; 
+    transition: .2s; 
+    position: relative;
+} 
+.query:hover {
+    background: hsl(180, 29%, 50%); 
+    color: hsl(180, 31%, 95%);
+}
+.remove-query-button {
+    position: absolute;
+    right: -25px;  
+    top: 0;
+    height: 100%;
+    width: 25px; 
+    background: hsl(180, 29%, 50%);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer; 
+    transition: .2s; 
+}
+.remove-query-button:hover {
+    background: hsl(180, 14%, 20%);
+}
+#clear-queries-button {
+    background: transparent;
+    border: none;
+    text-decoration: underline; 
+    font-weight: 500;
+    color: hsl(180, 8%, 52%); 
+    cursor: pointer;
+    transition: .2s; 
+}
+#clear-queries-button:hover { 
+    transform: scale(1.1); 
+    color: hsl(180, 29%, 50%); 
 }
 .job-listing {
     background: white; 
@@ -88,7 +149,8 @@ main {
     gap: 10px;
 }
 .position {
-    font-weight: 700; 
+    font-weight: 700;  
+    color: hsl(180, 14%, 20%);
 }
 .time-posted, .contract, .location {
     font-weight: 500;
