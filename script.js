@@ -81,7 +81,6 @@ function filter(e) {
         return;  
     }
     value.push(e.target.innerText);   
-    console.log(value) 
     hideListings();     
     const query = document.createElement('p');
     const removeQueryBtn = document.createElement('button');
